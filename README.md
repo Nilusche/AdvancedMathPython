@@ -1,3 +1,3 @@
 # AdvancedMathematicsPython
 
-Taught myself some object oriented python with advanced mathematics 
+Teaching myself some object oriented python with advanced mathematics 
