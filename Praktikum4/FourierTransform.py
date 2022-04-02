@@ -1,6 +1,6 @@
 from datetime import MAXYEAR
 from decimal import Decimal
-from Komplex import *
+from Complex import *
 
 def readComplex(file):
     vec = [Complex(0,0) for _ in range(1000)]
