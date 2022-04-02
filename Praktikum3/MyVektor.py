@@ -138,5 +138,5 @@ def funcF(x:MyVektor):
 def funcG(x:MyVektor):
     return (-(2.0*(x[0]*x[0])-2.0*x[0]*x[1]+(x[1]*x[1])+ (x[2]*x[2])-(2.0*x[0])-(4.0*x[2])));
     
-grad = MyVektor([0,0])
-grad.gradientenVerfahren(b, funcG, 0.1, 25)
+'''grad = MyVektor([0,0])
+grad.gradientenVerfahren(b, funcG, 0.1, 25)'''
