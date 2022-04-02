@@ -1,25 +1,16 @@
-from copy import deepcopy
 import math
 from operator import truediv
-from pyexpat.errors import XML_ERROR_XML_DECL
-from re import X, sub
-import re
+from re import sub
 from tokenize import Double, Number
 
-
-class CMyVektor:
+class MyVektor:
     __vec =[]
-    def getVec(self):
-        return self.__vec
 
     def __init__(self, vec):
         self.__vec = vec
 
     def __str__(self):
         return str(self.__vec);
-
-    def __len__(self):
-        return len(self.__vec)
 
     def length(self):
         sum = 0
@@ -30,9 +21,6 @@ class CMyVektor:
     def __getitem__(self,key):
         return self.__vec[key]
 
-    def __setitem__(self, key, value):
-        self.__vec[key] = value
-
     def __add__(self, other):
         vec1 = []
         if len(self.__vec)==len(other.__vec):
@@ -41,7 +29,7 @@ class CMyVektor:
         else:
             raise RuntimeError("Invalid dimensions")
 
-        return CMyVektor(vec1);
+        return MyVektor(vec1);
 
     def __sub__(self, other):
         vec1 = []
@@ -51,15 +39,15 @@ class CMyVektor:
         else:
             raise RuntimeError("Invalid dimensions")
 
-        return CMyVektor(vec1);
+        return MyVektor(vec1);
 
     def __mul__(self, other):
-        return CMyVektor([x*other for x in self.__vec])
+        return MyVektor([x*other for x in self.__vec])
 
     def gradient(self, function, h):
         subtrahend = function(self)
-        minuend = CMyVektor(self.__vec)
-        grad= CMyVektor([0 for _ in range (len(self.__vec))]);
+        minuend = MyVektor(self.__vec)
+        grad= MyVektor([0 for _ in range (len(self.__vec))]);
 
         for i in range(len(self.__vec)):
             minuend.__vec[i]+= h
@@ -71,8 +59,8 @@ class CMyVektor:
     def gradientenVerfahren(self, x, function, lambd, steps):
         break_condition = False
         print("Maximization: \n")
-        x_neu = CMyVektor(x.__vec)
-        grad = CMyVektor(x.__vec)
+        x_neu = MyVektor(x.__vec)
+        grad = MyVektor(x.__vec)
         f_x_neu = function(x)
         f = function(x)
         length = x.length()
@@ -96,7 +84,7 @@ class CMyVektor:
             print("f(x_neu) ", f_x_neu, "\n")
 
             if f_x_neu  > f :
-                xtest = CMyVektor(x)
+                xtest = MyVektor(x)
                 f_grad_x_test = f_x_neu
                 test_lambda = lambd
                 x_test = x + (grad*test_lambda)
@@ -140,14 +128,15 @@ class CMyVektor:
         return x
 
 
-
-
-
-def func(x:CMyVektor):
+a = MyVektor([0.2, -2.1])
+b = MyVektor([0,0,0])
+def func(x:MyVektor):
     return math.pow(x[0],2) *math.sin(x[1] * x[2])
 
-def funcF(x:CMyVektor):
+def funcF(x:MyVektor):
     return math.sin(x[0]*x[1]) + math.sin(x[0]) + math.cos(x[1])
-def funcG(x:CMyVektor):
+def funcG(x:MyVektor):
     return (-(2.0*(x[0]*x[0])-2.0*x[0]*x[1]+(x[1]*x[1])+ (x[2]*x[2])-(2.0*x[0])-(4.0*x[2])));
     
+grad = MyVektor([0,0])
+grad.gradientenVerfahren(b, funcG, 0.1, 25)

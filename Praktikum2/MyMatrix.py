@@ -7,7 +7,7 @@ import re
 from tokenize import Double, Number
 
 
-class CMyVektor:
+class MyVektor:
     __vec =[]
     def getVec(self):
         return self.__vec
@@ -41,7 +41,7 @@ class CMyVektor:
         else:
             raise RuntimeError("Invalid dimensions")
 
-        return CMyVektor(vec1);
+        return MyVektor(vec1);
 
     def __sub__(self, other):
         vec1 = []
@@ -51,15 +51,15 @@ class CMyVektor:
         else:
             raise RuntimeError("Invalid dimensions")
 
-        return CMyVektor(vec1);
+        return MyVektor(vec1);
 
     def __mul__(self, other):
-        return CMyVektor([x*other for x in self.__vec])
+        return MyVektor([x*other for x in self.__vec])
 
     def gradient(self, function, h):
         subtrahend = function(self)
-        minuend = CMyVektor(self.__vec)
-        grad= CMyVektor([0 for _ in range (len(self.__vec))]);
+        minuend = MyVektor(self.__vec)
+        grad= MyVektor([0 for _ in range (len(self.__vec))]);
 
         for i in range(len(self.__vec)):
             minuend.__vec[i]+= h
@@ -71,8 +71,8 @@ class CMyVektor:
     def gradientenVerfahren(self, x, function, lambd, steps):
         break_condition = False
         print("Maximization: \n")
-        x_neu = CMyVektor(x.__vec)
-        grad = CMyVektor(x.__vec)
+        x_neu = MyVektor(x.__vec)
+        grad = MyVektor(x.__vec)
         f_x_neu = function(x)
         f = function(x)
         length = x.length()
@@ -96,7 +96,7 @@ class CMyVektor:
             print("f(x_neu) ", f_x_neu, "\n")
 
             if f_x_neu  > f :
-                xtest = CMyVektor(x)
+                xtest = MyVektor(x)
                 f_grad_x_test = f_x_neu
                 test_lambda = lambd
                 x_test = x + (grad*test_lambda)
@@ -143,7 +143,7 @@ class CMyVektor:
         x_copy = deepcopy(self)
         fx = function(x_copy)
         dx = deepcopy(x_copy)
-        jacob = CMyMatrix([CMyVektor([0]* len(x_copy)), CMyVektor([0]* len(x_copy))] )
+        jacob = MyMatrix([MyVektor([0]* len(x_copy)), MyVektor([0]* len(x_copy))] )
         print(jacob)
         inv_jacob = deepcopy(jacob)
         abs_fx = 1e-5
@@ -174,18 +174,18 @@ class CMyVektor:
         return x_copy
 
 
-class CMyMatrix:
+class MyMatrix:
     __mat = []
 
     def __init__(self, __mat):
         self.__mat = __mat
     
-    def add_dimension(self, __vec : CMyVektor):
+    def add_dimension(self, __vec : MyVektor):
         self.__mat.append(__vec)
         
     def __len__(self):
         return len(self.__mat)
-    def __add__(self, other:CMyVektor):
+    def __add__(self, other:MyVektor):
         res = self.__mat
         if len(self.__mat) == len(other.__mat) and len(self.__mat[0]) == len(other.__mat[0]):
             for i in range(len(self.__mat)):
@@ -193,9 +193,9 @@ class CMyMatrix:
                     res[i][j]  += other.__mat[i][j]
         else:
             raise RuntimeError("Unequal Dimensions")            
-        return CMyMatrix(res)
+        return MyMatrix(res)
     
-    def __sub__(self, other:CMyVektor):
+    def __sub__(self, other:MyVektor):
         res = self.__mat
         if len(self.__mat) == len(other.__mat) and len(self.__mat[0]) == len(other.__mat[0]):
             for i in range(len(self.__mat)):
@@ -203,22 +203,22 @@ class CMyMatrix:
                     res[i][j]  -= other.__mat[i][j]
         else:
             raise RuntimeError("Unequal Dimensions")            
-        return CMyMatrix(res)
+        return MyMatrix(res)
         
 
     def __mul__(self, other):
         res = [0]* len(self.__mat)
-        if type(other) is CMyVektor:
+        if type(other) is MyVektor:
             if len(self.__mat) == len(other):
                 for  i in range(len(self.__mat[0])):
                     for j in range(len(other)):
                         res[i] += self.__mat[j][i] * other[j] 
                 
-                return CMyVektor(res)
+                return MyVektor(res)
             else:  
                 raise RuntimeError("Dimensions of Instances are not compatible")
         else:
-            return CMyMatrix([x*other for x in self.__mat])
+            return MyMatrix([x*other for x in self.__mat])
 
     def __str__(self):
         res = ""
@@ -239,14 +239,14 @@ class CMyMatrix:
         self.__mat[key] = value
 
 
-    def jacobi(self, v:CMyVektor, function):     
+    def jacobi(self, v:MyVektor, function):     
         h = 1e-4
         f = function(v)
         
         temp = []
         for i in range(len(v)):
-            temp.append(CMyVektor([0]*len(f)))
-        jaco = CMyMatrix(temp)
+            temp.append(MyVektor([0]*len(f)))
+        jaco = MyMatrix(temp)
 
         copy = deepcopy(v)
         for i in range(len(f)):
@@ -265,31 +265,31 @@ class CMyMatrix:
             c = self.__mat[0][1]
             d = self.__mat[1][1]
             factor = 1.0 / ((a*d) - b*c)
-            mat =  CMyMatrix([CMyVektor([0,0]), CMyVektor([0,0])])
+            mat =  MyMatrix([MyVektor([0,0]), MyVektor([0,0])])
             print(mat[0][0])
             mat[0][0] = d
             mat[1][0] = -b
             mat[0][1] = -c
             mat[1][1] = a
-            return CMyMatrix(mat * factor)
+            return MyMatrix(mat * factor)
         else:
             raise RuntimeError("Matrix not 2x2")
     
 
 
-def func3(x: CMyVektor):
-    res = CMyVektor([0,0])
+def func3(x: MyVektor):
+    res = MyVektor([0,0])
     res[0] =  4 * x[0] * x[0] * x[1]
     res[1] = 4 * x[2] * x[2] + 4
     return res
 
-def func2(x:CMyVektor):
-    res = CMyVektor([0,0])
+def func2(x:MyVektor):
+    res = MyVektor([0,0])
     res[0] = (x[0] * x[0] * x[0] * x[1] * x[1] * x[1]) - (2.0 * x[1]);
     res[1] = x[0] - 2.0;
     return res
 
-c = CMyMatrix([CMyVektor([0,0]), CMyVektor([0,0]),CMyVektor([0,0])]) 
-a = CMyVektor([1,1])
+c = MyMatrix([MyVektor([0,0]), MyVektor([0,0]),MyVektor([0,0])]) 
+a = MyVektor([1,1])
 a.newton(func2, 50)
 
