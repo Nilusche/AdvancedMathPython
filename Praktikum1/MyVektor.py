@@ -84,7 +84,6 @@ class MyVektor:
             print("f(x_neu) ", f_x_neu, "\n")
 
             if f_x_neu  > f :
-                xtest = MyVektor(x)
                 f_grad_x_test = f_x_neu
                 test_lambda = lambd
                 x_test = x + (grad*test_lambda)
