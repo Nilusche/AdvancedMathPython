@@ -42,7 +42,7 @@ class DGLSolver:
             eul += self.__derivatives(eul, x) * h
             k  =i
             if k+1 == steps:
-                x = (diff * ++k)/steps + x_start
+                x = (diff * k+1)/steps + x_start
                 print("End")
                 print("\t x = ", x)
                 print("\t y = ", eul)
@@ -80,9 +80,9 @@ class DGLSolver:
 
             k=i
             if k+1 == steps:
-                x = (diff* k)/steps + x_start
+                x = (diff* k+1)/steps + x_start
                 print("End")
-                print("\t x = ", x+h)
+                print("\t x = ", x)
                 print("\t y = ", heun)
          
 
@@ -111,4 +111,4 @@ dgl.heun(0.0, 2.0, 100,y)'''
 dgl = DGLSolver(False, DGLthirdOrder)
 y = MyVektor([1,-1,2])
 dgl.euler(1,2,10,y)
-
+dgl.heun(1,2,10,y)
