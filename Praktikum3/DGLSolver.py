@@ -6,7 +6,7 @@ class DGLSolver:
     __DGL = ()
     __DGLSystem = True
     def __init__(self, systemtype, DGL):
-        self.__DGLSystem = True if DGL else False
+        self.__DGLSystem = True if systemtype else False
         self.__DGL = DGL
     
     def __derivatives(self, y:MyVektor, x):
@@ -15,7 +15,7 @@ class DGLSolver:
             sys = self.__DGL(y,x)
         else: 
             n  = len(y)
-            sys = MyVektor([0]*n)
+            sys = MyVektor([0 for x in range(n)])
             sys[n-1] =self.__DGL(y,x)
 
             for i in range(n-1):
@@ -102,11 +102,13 @@ def DGLthirdOrder(y:MyVektor, x):
 y = MyVektor([-1])
 dgl.euler(1, 2.0,100,y)'''
 
+'''
 dgl = DGLSolver(True, DGLSystem1)
 y = MyVektor([0,1])
-'''dgl.euler(0.0, 2.0, 100,y) '''
-dgl.heun(0.0, 2.0, 100,y)
+dgl.euler(0.0, 2.0, 100,y)
+dgl.heun(0.0, 2.0, 100,y)'''
 
-'''dgl = DGLSolver(False, DGLthirdOrder)
-y = MyVektor([1,-1,2])'''
+dgl = DGLSolver(False, DGLthirdOrder)
+y = MyVektor([1,-1,2])
+dgl.euler(1,2,10,y)
 

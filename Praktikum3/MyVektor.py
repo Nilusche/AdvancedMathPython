@@ -12,6 +12,9 @@ class MyVektor:
     def __str__(self):
         return str(self.__vec);
 
+    def __len__(self):
+        return len(self.__vec)
+
     def length(self):
         sum = 0
         for i in self.__vec:
@@ -20,6 +23,9 @@ class MyVektor:
 
     def __getitem__(self,key):
         return self.__vec[key]
+
+    def __setitem__(self,key,value):
+        self.__vec[key]=value    
 
     def __add__(self, other):
         vec1 = []
