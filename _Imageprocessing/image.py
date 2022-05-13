@@ -34,20 +34,27 @@ def write_vec_to_file(vec, name, epsilon):
 
 def read_single_data_from_file(file):
     vec =[]
+    for i in range(width):
+        for j in range(height):
+            vec.append(((str(i),str(j)), Complex(0,0)))
+    
     with open(file) as data:
         data.readline()
         for line in data:
             array = line.split()
-            vec.append(((array[0], array[1]), Complex(float(array[2]), float(array[3]))))
+            for i in range(len(vec)):
+                if vec[i][0] == (array[0], array[1]):
+                    vec[i]=(((array[0], array[1]), Complex(float(array[2]), float(array[3]))))
     data.close()
+
+
     return vec;
 
 def set_image_pixel(vecR, vecG, vecB, target):
     img = Image.open(target)
     im = img.load();
-    print(len(vecR))
+
     for i in range(len(vecR)):
-        print(i)
         x = int(vecR[i][0][0])
         y = int(vecR[i][0][1])
         im[x,y]=(int(vecR[i][1].getReal()), int(vecG[i][1].getReal()), int(vecB[i][1].getReal()), 255)
