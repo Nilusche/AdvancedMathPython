@@ -45,15 +45,18 @@ def read_single_data_from_file(file):
 def set_image_pixel(vecR, vecG, vecB, target):
     img = Image.open(target)
     im = img.load();
+    print(len(vecR))
     for i in range(len(vecR)):
-            x = int(vecR[i][0][0])
-            y = int(vecR[i][0][1])
-            im[x,y]=(int(vecR[i][1].getReal()), int(vecG[i][1].getReal()), int(vecB[i][1].getReal()), 255)
+        print(i)
+        x = int(vecR[i][0][0])
+        y = int(vecR[i][0][1])
+        im[x,y]=(int(vecR[i][1].getReal()), int(vecG[i][1].getReal()), int(vecB[i][1].getReal()), 255)
 
 
     img.save(target)
 
 def process_image(epsilon):
+    
     vecR = read_single_data_from_file("./data/r.txt")
     vecG = read_single_data_from_file("./data/g.txt")
     vecB = read_single_data_from_file("./data/b.txt")
@@ -68,7 +71,7 @@ def process_image(epsilon):
     write_vec_to_file(r_transformed, str(epsilon) + "_r.txt", epsilon)
     write_vec_to_file(g_transformed, str(epsilon) + "_g.txt", epsilon)
     write_vec_to_file(b_transformed, str(epsilon) + "_b.txt", epsilon)
-
+    
 
 
     #Transform back
@@ -97,8 +100,8 @@ def process_image(epsilon):
 
 #write_rgba_to_file()
 if __name__ == "__main__": 
-    #process_image(1)
-    vecR = read_single_data_from_file("./data/transformed_0_r.txt")
-    print(vecR[1][1].abs())
+    process_image(0)
+    
+
 
 
