@@ -22,19 +22,21 @@ def writeComplex(file, data, epsilon=-1.0):
 
 def transformed(data, direction):
     transformed = []
+
     N = len(data)
     factor = 1/math.sqrt(N)
     for n in range(N):
         c = Complex(0,0)
         for k in range(N):
             if direction==True:
-                c+=data[k] * Complex(-(2.0 * math.pi * k * n)/N)
+                c+=data[k][1] * Complex(-(2.0 * math.pi * k * n)/N)
             else:
-                c+=data[k] * Complex((2.0 * math.pi * k * n)/N)
+                c+=data[k][1] * Complex((2.0 * math.pi * k * n)/N)
         
         c*=factor
-        transformed.append(c)
-            
+        transformed.append((data[n][0],c))
+        
+        
     return transformed
 
 def deviation(data1, data2):

@@ -16,7 +16,7 @@ class Complex:
 
     def __str__(self):
         pos = "+" if self.__b > 0 else "-"
-        return str(self.__a) +pos+ str(abs(self.__b))+ "i"
+        return str(self.__a) + " , " + str(self.__b)+ "i"
 
     def getReal(self):
         return self.__a
