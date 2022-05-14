@@ -107,7 +107,7 @@ def process_image(epsilon):
 
 #write_rgba_to_file()
 if __name__ == "__main__": 
-    process_image(0)
+    process_image(80)
     
 
 
