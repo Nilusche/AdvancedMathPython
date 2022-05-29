@@ -93,9 +93,9 @@ def process_image(epsilon):
     r_back = transformed(r_transformed, False)
     g_back = transformed(g_transformed, False)
     b_back = transformed(b_transformed, False)
-    write_vec_to_file(r_back, "back_"+str(epsilon)+"_r.txt", epsilon)
-    write_vec_to_file(g_back, "back_"+str(epsilon)+"_g.txt", epsilon)
-    write_vec_to_file(b_back, "back_"+str(epsilon)+"_b.txt", epsilon)
+    write_vec_to_file(r_back, "back_"+str(epsilon)+"_r.txt", 0)
+    write_vec_to_file(g_back, "back_"+str(epsilon)+"_g.txt", 0)
+    write_vec_to_file(b_back, "back_"+str(epsilon)+"_b.txt", 0)
 
 
     #Change target image
